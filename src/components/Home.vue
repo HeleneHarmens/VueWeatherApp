@@ -4,10 +4,11 @@
     
     <div id="info">
       <h2>{{cities.name}}</h2>
-      <p>Day: {{lists[1].dt_txt}}</p>
-      <p>Temperature: {{lists[1].main.temp}}</p>
-      <p>Humidity: {{lists[1].main.humidity}}</p>
-      <p>Weather: {{lists[1].weather[0].main}}</p>
+      <p><strong>Day:</strong> {{lists[1].dt_txt}}</p>
+      <p><strong>Temperature:</strong> {{lists[1].main.temp}}</p>
+      <p><strong>Humidity:</strong> {{lists[1].main.humidity}}</p>
+      <p><strong>Weather:</strong> {{lists[1].weather[0].main}}</p>
+      <br>
     </div>
 
     <div id="card">
@@ -90,7 +91,7 @@ export default {
   name: "home",
   data() {
     return {
-      title: "Weather",
+      title: "Weather App",
       tickets: [],
       apiKey: "6796724a94f12b9b9b866a4d4b0794b2",
       chosenCity: "Oslo",
@@ -168,6 +169,14 @@ th {
   text-align: center;
   display: inline-block;
 
+}
+
+#info {
+  margin:0;
+}
+
+p { 
+  margin:0;
 }
 
 </style>
