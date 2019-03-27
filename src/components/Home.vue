@@ -14,6 +14,11 @@
         <p><strong>Humidity:</strong> {{lists[1].main.humidity}}</p>
         <p><strong>Weather:</strong> {{lists[1].weather[0].main}}</p>
         <br>
+        <p><strong>Check todays weather for another city!</strong></p>
+        <a href="#" @click="fetchItems(chosenCity = 'oslo')">Oslo</a>
+        <a href="#" @click="fetchItems(chosenCity = 'trondheim')">Trondheim</a>
+        <a href="#" @click="fetchItems(chosenCity = 'stavanger' )">Stavanger</a>
+    
       </div>
     </div>
   </div>
@@ -27,7 +32,7 @@ export default {
       isLoading: false,
       title: "Home",
       apiKey: "6796724a94f12b9b9b866a4d4b0794b2",
-      chosenCity: "Oslo",
+      chosenCity: "Trondheim",
       units: "metric",
       info: [],
       lists: [],
