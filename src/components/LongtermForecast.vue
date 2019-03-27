@@ -10,20 +10,51 @@
 
       <br>
       <div id="card">
-        <h4>longterm for</h4>
+        <h4>longterm</h4>
         <table>
           <tr>
-            <td><h5>Time</h5></td>
+            <td><h5>Day</h5></td>
             <td><h5>Forecast</h5></td>
             <td><h5>Temp</h5></td>
             <td><h5>Wind</h5></td>
           </tr>
-          <tr v-for="i in 10" :key="i">
-            <td> <p>{{lists[i].dt_txt}}</p></td>
-            <td><p>{{lists[i].weather[0].main}}</p></td>
-            <td><p>{{lists[i].main.temp}}</p></td>
-            <td><p>{{lists[i].wind.speed}}</p></td>
+          <tr>
+            <td><p>{{lists[0].dt_txt}}</p></td>
+            <td><p>{{lists[0].weather[0].main}}</p></td>
+            <td><p>{{lists[0].main.temp}}</p></td>
+            <td><p>{{lists[0].wind.speed}}</p></td>
           </tr>
+          <tr>
+            <td><p>{{lists[8].dt_txt}}</p></td>
+            <td><p>{{lists[8].weather[0].main}}</p></td>
+            <td><p>{{lists[8].main.temp}}</p></td>
+            <td><p>{{lists[8].wind.speed}}</p></td>
+          </tr>
+          <tr>
+            <td><p>{{lists[16].dt_txt}}</p></td>
+            <td><p>{{lists[16].weather[0].main}}</p></td>
+            <td><p>{{lists[16].main.temp}}</p></td>
+            <td><p>{{lists[16].wind.speed}}</p></td>
+          </tr>
+          <tr>
+            <td><p>{{lists[24].dt_txt}}</p></td>
+            <td><p>{{lists[24].weather[0].main}}</p></td>
+            <td><p>{{lists[24].main.temp}}</p></td>
+            <td><p>{{lists[24].wind.speed}}</p></td>
+          </tr>
+          <tr>
+            <td><p>{{lists[32].dt_txt}}</p></td>
+            <td><p>{{lists[32].weather[0].main}}</p></td>
+            <td><p>{{lists[32].main.temp}}</p></td>
+            <td><p>{{lists[32].wind.speed}}</p></td>
+          </tr>
+          <tr>
+            <td><p>{{lists[39].dt_txt}}</p></td>
+            <td><p>{{lists[39].weather[0].main}}</p></td>
+            <td><p>{{lists[39].main.temp}}</p></td>
+            <td><p>{{lists[39].wind.speed}}</p></td>
+          </tr>
+
         </table>
       </div>
     </div>
@@ -43,12 +74,16 @@ export default {
       info: [],
       lists: [],
       cities: [],
+      Today: new Date(),
+      Tomorrow: new Date()
     };
   },
 
   created: function() {
     this.isLoading = true
     this.fetchItems();
+    this.setToday();
+    this.setTomorrow();
   },
 
   methods: {
@@ -62,9 +97,40 @@ export default {
         this.isLoading = false;
         //console.log("home.vue info: " + JSON.stringify(this.info));
       });
+    },
+    setToday() {
+      this.Today = getToday(new Date())
+    },
+         
+    setTomorrow() {
+      this.Tomorrow = getTomorrow(new Date())
     }
   }
 };
+
+function getToday(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+function getTomorrow(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + (d.getDate()+1),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

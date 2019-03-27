@@ -9,7 +9,7 @@
     <div v-else>
       
       <div id="card">
-        <h4>Today, {{lists[0].dt_txt}}</h4>
+        <h4>Today, {{Today}}</h4>
         <table>
           <tr>
             <td><h5>Time</h5></td>
@@ -17,35 +17,25 @@
             <td><h5>Temp</h5></td>
             <td><h5>Wind</h5></td>
           </tr>
-          <tr>
-            <td><p>{{lists[0].dt_txt}}</p></td>
-            <td><p>{{lists[0].weather[0].main}}</p></td>
-            <td><p>{{lists[0].main.temp}}</p></td>
-            <td><p>{{lists[0].wind.speed}}</p></td>
-          </tr>
-          <tr>
-            <td><p>{{lists[1].dt_txt}}</p></td>
-            <td><p>{{lists[1].weather[0].main}}</p></td>
-            <td><p>{{lists[1].main.temp}}</p></td>
-            <td><p>{{lists[1].wind.speed}}</p></td>
-          </tr>
-          <tr>
-            <td><p>{{lists[2].dt_txt}}</p></td>
-            <td><p>{{lists[2].weather[0].main}}</p></td>
-            <td><p>{{lists[2].main.temp}}</p></td>
-            <td><p>{{lists[2].wind.speed}}</p></td>
-          </tr>
-          <tr>
-            <td><p>{{lists[3].dt_txt}}</p></td>
-            <td><p>{{lists[3].weather[0].main}}</p></td>
-            <td><p>{{lists[3].main.temp}}</p></td>
-            <td><p>{{lists[3].wind.speed}}</p></td>
+          <tr v-for="i in 20" :key="i" >
+            <td v-if="String(lists[i].dt_txt).includes(String(Today))">
+              <p>{{lists[i].dt_txt}}</p>
+              </td>
+            <td v-if="String(lists[i].dt_txt).includes(String(Today))">
+              <p>{{lists[i].weather[0].main}}</p>
+              </td>
+            <td v-if="String(lists[i].dt_txt).includes(String(Today))">
+              <p>{{lists[i].main.temp}}</p>
+              </td>
+            <td v-if="String(lists[i].dt_txt).includes(String(Today))">
+              <p>{{lists[i].wind.speed}}</p>
+              </td>
           </tr>
         </table>
       </div>
 
-          <div id="card">
-        <h4>Tomorrow, {{lists[8].dt_txt}}</h4>
+      <div id="card">
+        <h4>Tomorrow, {{Tomorrow}}</h4>
         <table>
           <tr>
             <td><h5>Time</h5></td>
@@ -53,38 +43,25 @@
             <td><h5>Temp</h5></td>
             <td><h5>Wind</h5></td>
           </tr>
-          <tr>
-            <td> <p>{{lists[8].dt_txt}}</p></td>
-            <td><p>{{lists[8].weather[0].main}}</p></td>
-            <td><p>{{lists[8].main.temp}}</p></td>
-            <td><p>{{lists[8].wind.speed}}</p></td>
-          </tr>
-          <tr>
-            <td> <p>{{lists[9].dt_txt}}</p></td>
-            <td><p>{{lists[9].weather[0].main}}</p></td>
-            <td><p>{{lists[9].main.temp}}</p></td>
-            <td><p>{{lists[9].wind.speed}}</p></td>
-          </tr>
-          <tr>
-            <td> <p>{{lists[10].dt_txt}}</p></td>
-            <td><p>{{lists[10].weather[0].main}}</p></td>
-            <td><p>{{lists[10].main.temp}}</p></td>
-            <td><p>{{lists[10].wind.speed}}</p></td>
-          </tr>
-          <tr>
-            <td> <p>{{lists[10].dt_txt}}</p></td>
-            <td><p>{{lists[10].weather[0].main}}</p></td>
-            <td><p>{{lists[10].main.temp}}</p></td>
-            <td><p>{{lists[10].wind.speed}}</p></td>
+          <tr v-for="i in 20" :key="i" >
+            <td v-if="String(lists[i].dt_txt).includes(String(Tomorrow))">
+              <p>{{lists[i].dt_txt}}</p></td>
+            <td v-if="String(lists[i].dt_txt).includes(String(Tomorrow))">
+              <p>{{lists[i].weather[0].main}}</p></td>
+            <td v-if="String(lists[i].dt_txt).includes(String(Tomorrow))">
+              <p>{{lists[i].main.temp}}</p></td>
+            <td v-if="String(lists[i].dt_txt).includes(String(Tomorrow))">
+              <p>{{lists[i].wind.speed}}</p></td>
           </tr>
         </table>
-      </div>
+      </div>    
     </div>
 
   </div>
 </template>
 
 <script>
+
 export default {
   name: "todayTomorrow",
   data() {
@@ -97,12 +74,16 @@ export default {
       info: [],
       lists: [],
       cities: [],
-    };
+      Today: new Date(),
+      Tomorrow: new Date()
+    };  
   },
 
   created: function() {
     this.isLoading = true
     this.fetchItems();
+    this.setToday();
+    this.setTomorrow();
   },
 
   methods: {
@@ -116,9 +97,40 @@ export default {
         this.isLoading = false;
         //console.log("home.vue info: " + JSON.stringify(this.info));
       });
+    },
+    setToday() {
+      this.Today = getToday(new Date())
+    },
+         
+    setTomorrow() {
+      this.Tomorrow = getTomorrow(new Date())
     }
   }
 };
+
+function getToday(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+function getTomorrow(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + (d.getDate()+1),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
