@@ -23,6 +23,8 @@
 
 <script>
 import L from "leaflet";
+
+//making variables
 export default {
   name: "myMap",
   data() {
@@ -48,6 +50,7 @@ export default {
   },
 
   methods: {
+    //gets info from api, add to variables
     fetchItems() {
       let uri =
         "http://api.openweathermap.org/data/2.5/forecast?q=" +
@@ -63,7 +66,7 @@ export default {
       });
     },
 
-// Get the map appear on the page
+// Get the map to appear on the page
     initMap() {
       this.leafletMap = L.map("mapid");
       this.leafletMap.setView([61, 8], 6);
