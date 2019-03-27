@@ -28,7 +28,8 @@ new Vue({
     list: []
   },
   mounted() {
-    axios.get(url).then(response => {
+    axios.get('http://api.openweathermap.org/data/2.5/forecast?q='+this.city+'&appid='+this.apiKey+'&units='+this.units)
+    .then(response => {
       this.results = response.data
       //console.log("mainjs results: "+JSON.stringify(this.results))
     })
