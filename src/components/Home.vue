@@ -2,15 +2,20 @@
   <div class="home">
     <h1>{{ title }}</h1>
     
-    <div id="info">
-      <h2>{{cities.name}}</h2>
-      <p><strong>Day:</strong> {{lists[1].dt_txt}}</p>
-      <p><strong>Temperature:</strong> {{lists[1].main.temp}}</p>
-      <p><strong>Humidity:</strong> {{lists[1].main.humidity}}</p>
-      <p><strong>Weather:</strong> {{lists[1].weather[0].main}}</p>
-      <br>
+    <div v-if="isLoading">
+        <p>is loading...</p> 
     </div>
 
+    <div v-else>
+      <div id="info">
+        <h2>{{cities.name}}</h2>
+        <p><strong>Day:</strong> {{lists[1].dt_txt}}</p>
+        <p><strong>Temperature:</strong> {{lists[1].main.temp}}</p>
+        <p><strong>Humidity:</strong> {{lists[1].main.humidity}}</p>
+        <p><strong>Weather:</strong> {{lists[1].weather[0].main}}</p>
+        <br>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -19,8 +24,8 @@ export default {
   name: "home",
   data() {
     return {
+      isLoading: false,
       title: "Home",
-      tickets: [],
       apiKey: "6796724a94f12b9b9b866a4d4b0794b2",
       chosenCity: "Oslo",
       units: "metric",
@@ -31,6 +36,7 @@ export default {
   },
 
   created: function() {
+    this.isLoading = true
     this.fetchItems();
   },
 
@@ -42,6 +48,7 @@ export default {
         this.info = response.data;
         (this.lists = response.data.list), 
         (this.cities = response.data.city);
+        this.isLoading = false;
         //console.log("home.vue info: " + JSON.stringify(this.info));
       });
     }
