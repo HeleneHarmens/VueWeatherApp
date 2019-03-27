@@ -3,15 +3,16 @@
     <h1>{{ title }}</h1>
     <div id="mapid"></div>
     <div id="location">
+      <!--Links to alter map to go to those places-->
       <ul>
         <li>
-          <a href="#" @click="moveMap([58.969975, 5.733107])">Stavanger</a>
+          <a href="#/" @click="moveMap([59.91111, 10.75278])">Oslo</a>
         </li>
         <li>
-          <a href="#" @click="moveMap([59.91111, 10.75278])">Oslo</a>
+          <a href="#/" @click="moveMap([63.4306, 10.3952])">Trondheim</a>
         </li>
         <li>
-          <a href="#" @click="moveMap([63.4306, 10.3952])">Trondheim</a>
+          <a href="#/" @click="moveMap([58.969975, 5.733107])">Stavanger</a>
         </li>
       </ul>
     </div>
@@ -62,6 +63,7 @@ export default {
       });
     },
 
+// Get the map appear on the page
     initMap() {
       this.leafletMap = L.map("mapid");
       this.leafletMap.setView([61, 8], 6);
@@ -79,6 +81,7 @@ export default {
       ).addTo(this.leafletMap);
     },
 
+//links uses this method to setView
     moveMap(coord) {
       this.leafletMap.setView(coord, 8);
     }
@@ -86,7 +89,7 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- Some CSS to make pretty -->
 <style>
 h1,
 h2 {

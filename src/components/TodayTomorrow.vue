@@ -7,7 +7,12 @@
     </div>
 
     <div v-else>
-      
+      <p><strong>Check todays and tomorrows weather for another city: </strong></p>
+      <ul>
+        <li><a href="#/" @click="fetchItems(chosenCity = 'oslo')">Oslo</a></li>
+        <li><a href="#/" @click="fetchItems(chosenCity = 'trondheim')">Trondheim</a></li>
+        <li><a href="#/" @click="fetchItems(chosenCity = 'stavanger' )">Stavanger</a></li>
+      </ul>
       <div id="card">
         <h4>Today, {{lists[0].dt_txt}}</h4>
         <table>
@@ -92,7 +97,7 @@ export default {
       isLoading: false,
       title: "Today & Tomorrow",
       apiKey: "6796724a94f12b9b9b866a4d4b0794b2",
-      chosenCity: "Oslo",
+      chosenCity: "Trondheim",
       units: "metric",
       info: [],
       lists: [],
