@@ -1,7 +1,14 @@
 <template>
   <div class="longterm">
     <h1>{{ title }}</h1>
-    
+    <p><strong>Check todays and tomorrows weather for another city: </strong></p>
+        <ul>
+          <li><a href="#/" @click="fetchItems(chosenCity = 'Oslo')">Oslo</a></li>
+          <li><a href="#/" @click="fetchItems(chosenCity = 'Trondheim')">Trondheim</a></li>
+          <li><a href="#/" @click="fetchItems(chosenCity = 'Stavanger' )">Stavanger</a></li>
+      </ul>
+    <h3>{{chosenCity}}</h3>
+
     <div v-if="isLoading">
         <p>is loading...</p> 
     </div>
@@ -10,7 +17,7 @@
 
       <br>
       <div id="card">
-        <h4>longterm</h4>
+        <h4>Long-term Forecast</h4>
         <table>
           <tr>
             <td><h5>Day</h5></td>
@@ -18,39 +25,15 @@
             <td><h5>Temp</h5></td>
             <td><h5>Wind</h5></td>
           </tr>
-          <tr>
-            <td><p>{{lists[0].dt_txt}}</p></td>
-            <td><p>{{lists[0].weather[0].main}}</p></td>
-            <td><p>{{lists[0].main.temp}}</p></td>
-            <td><p>{{lists[0].wind.speed}}</p></td>
-          </tr>
-          <tr>
-            <td><p>{{lists[8].dt_txt}}</p></td>
-            <td><p>{{lists[8].weather[0].main}}</p></td>
-            <td><p>{{lists[8].main.temp}}</p></td>
-            <td><p>{{lists[8].wind.speed}}</p></td>
-          </tr>
-          <tr>
-            <td><p>{{lists[16].dt_txt}}</p></td>
-            <td><p>{{lists[16].weather[0].main}}</p></td>
-            <td><p>{{lists[16].main.temp}}</p></td>
-            <td><p>{{lists[16].wind.speed}}</p></td>
-          </tr>
-          <tr>
-            <td><p>{{lists[24].dt_txt}}</p></td>
-            <td><p>{{lists[24].weather[0].main}}</p></td>
-            <td><p>{{lists[24].main.temp}}</p></td>
-            <td><p>{{lists[24].wind.speed}}</p></td>
-          </tr>
-          <tr>
-            <td><p>{{lists[32].dt_txt}}</p></td>
-            <td><p>{{lists[32].weather[0].main}}</p></td>
-            <td><p>{{lists[32].main.temp}}</p></td>
-            <td><p>{{lists[32].wind.speed}}</p></td>
+          <tr v-for="i in everyNth(numbers)" :key="i" >
+            <td><p>{{lists[i].dt_txt}}</p></td>
+            <td><p>{{lists[i].weather[0].description}}</p><img src="http://openweathermap.org/img/w/02n.png"></td>
+            <td><p>{{lists[i].main.temp}}</p></td>
+            <td><p>{{lists[i].wind.speed}}</p></td>
           </tr>
           <tr>
             <td><p>{{lists[39].dt_txt}}</p></td>
-            <td><p>{{lists[39].weather[0].main}}</p></td>
+            <td><p>{{lists[39].weather[0].description}}</p><img src="http://openweathermap.org/img/w/02n.png"></td>
             <td><p>{{lists[39].main.temp}}</p></td>
             <td><p>{{lists[39].wind.speed}}</p></td>
           </tr>
@@ -75,10 +58,11 @@ export default {
       lists: [],
       cities: [],
       Today: new Date(),
-      Tomorrow: new Date()
+      Tomorrow: new Date(),
+      numbers: [ 0, 8, 16, 24, 32, 39],
+      icon: null
     };
   },
-
   created: function() {
     this.isLoading = true
     this.fetchItems();
@@ -86,6 +70,15 @@ export default {
     this.setTomorrow();
   },
 
+  computed: {
+    Clouds () { return "cloud"; },
+    Clear () { return "sun"; },
+    Rain () { return "cloud-rain"; },
+    Snow () { return "snowflake"; }
+  },
+
+  
+// METHODS
   methods: {
     fetchItems() {
       let uri =
@@ -104,10 +97,17 @@ export default {
          
     setTomorrow() {
       this.Tomorrow = getTomorrow(new Date())
+    },
+    
+    everyNth: function (numbers) {
+      return numbers.filter(function (number) {
+        return number % 2 === 0
+      })
     }
   }
 };
 
+// FUNCTIONS
 function getToday(date) {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
@@ -133,7 +133,7 @@ function getTomorrow(date) {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- CSS -->
 <style>
 h1,
 h2 {

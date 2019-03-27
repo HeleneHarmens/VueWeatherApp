@@ -8,6 +8,15 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCloud, faSun, faCloudRain, faSnowflake } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(
+  faCloud, faSun, faCloudRain, faSnowflake
+)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false

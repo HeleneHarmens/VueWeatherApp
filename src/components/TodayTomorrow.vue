@@ -1,6 +1,13 @@
 <template>
   <div class="todayTomorrow">
     <h1>{{ title }}</h1>
+    <p><strong>Check todays and tomorrows weather for another city: </strong></p>
+        <ul>
+          <li><a href="#/" @click="fetchItems(chosenCity = 'Oslo')">Oslo</a></li>
+          <li><a href="#/" @click="fetchItems(chosenCity = 'Trondheim')">Trondheim</a></li>
+          <li><a href="#/" @click="fetchItems(chosenCity = 'Stavanger' )">Stavanger</a></li>
+        </ul>
+      <h3>{{chosenCity}}</h3>
     
     <div v-if="isLoading">
         <p>is loading...</p> 
@@ -9,6 +16,7 @@
     <div v-else>
       
       <div id="card">
+        
         <h4>Today, {{Today}}</h4>
         <table>
           <tr>
@@ -22,7 +30,11 @@
               <p>{{lists[i].dt_txt}}</p>
               </td>
             <td v-if="String(lists[i].dt_txt).includes(String(Today))">
-              <p>{{lists[i].weather[0].main}}</p>
+              <p>{{lists[i].weather[0].description}}</p>
+              <!--<p>{{lists[i].weather[0].icon}}</p>-->
+              <!--<font-awesome-icon v-bind:icon="Clouds" />-->
+              <img src="http://openweathermap.org/img/w/02n.png">
+              
               </td>
             <td v-if="String(lists[i].dt_txt).includes(String(Today))">
               <p>{{lists[i].main.temp}}</p>
@@ -35,6 +47,7 @@
       </div>
 
       <div id="card">
+        
         <h4>Tomorrow, {{Tomorrow}}</h4>
         <table>
           <tr>
@@ -47,7 +60,10 @@
             <td v-if="String(lists[i].dt_txt).includes(String(Tomorrow))">
               <p>{{lists[i].dt_txt}}</p></td>
             <td v-if="String(lists[i].dt_txt).includes(String(Tomorrow))">
-              <p>{{lists[i].weather[0].main}}</p></td>
+              <p>{{lists[i].weather[0].description}}</p>
+              <!--<font-awesome-icon v-bind:icon="String(Clouds)" />-->
+              <img src="http://openweathermap.org/img/w/02n.png">
+              </td>
             <td v-if="String(lists[i].dt_txt).includes(String(Tomorrow))">
               <p>{{lists[i].main.temp}}</p></td>
             <td v-if="String(lists[i].dt_txt).includes(String(Tomorrow))">
@@ -84,6 +100,13 @@ export default {
     this.fetchItems();
     this.setToday();
     this.setTomorrow();
+  },
+
+  computed: {
+    Clouds () { return "cloud"; },
+    Clear () { return "sun"; },
+    Rain () { return "cloud-rain"; },
+    Snow () { return "snowflake"; }
   },
 
   methods: {
@@ -131,6 +154,16 @@ function getTomorrow(date) {
 
     return [year, month, day].join('-');
 }
+
+function getIcon() {
+  // <font-awesome-icon icon="cloud" />
+  //if(weather === 'Clouds') {
+    return "cloud";
+  //}
+}
+
+
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
