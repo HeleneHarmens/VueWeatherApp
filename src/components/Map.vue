@@ -1,25 +1,16 @@
 <template>
-  <div class="home">
+  <div class="myMap">
     <h1>{{ title }}</h1>
     
-    <div id="info">
-      <h2>{{cities.name}}</h2>
-      <p><strong>Day:</strong> {{lists[1].dt_txt}}</p>
-      <p><strong>Temperature:</strong> {{lists[1].main.temp}}</p>
-      <p><strong>Humidity:</strong> {{lists[1].main.humidity}}</p>
-      <p><strong>Weather:</strong> {{lists[1].weather[0].main}}</p>
-      <br>
-    </div>
-
   </div>
 </template>
 
 <script>
 export default {
-  name: "home",
+  name: "myMap",
   data() {
     return {
-      title: "Home",
+      title: "Weather Map",
       tickets: [],
       apiKey: "6796724a94f12b9b9b866a4d4b0794b2",
       chosenCity: "Oslo",

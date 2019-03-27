@@ -6,13 +6,25 @@
     <main>
       <!--<img src="./assets/logo.png" alt="Vue.js PWA">--> 
       <router-view></router-view>
+      <myMap></myMap>
+      <todayTomorrow></todayTomorrow>
+      <longterm></longterm>
     </main>
   </div>
 </template>
 
 <script>
+import todayTomorrow from './components/TodayTomorrow.vue'
+import longterm from './components/LongtermForecast.vue'
+import myMap from './components/Map.vue'
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    todayTomorrow,
+    longterm,
+    myMap
+  }
 }
 </script>
 
