@@ -1,6 +1,6 @@
 # vueweather
-
-> A Vue.js project
+## Task 28 - Vue Weather App
+> by Line Sævold & Helene Harmens
 
 ## Build Setup
 
