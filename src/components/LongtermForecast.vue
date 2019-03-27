@@ -14,12 +14,6 @@
     </div>
 
     <div v-else>
-      <p><strong>Check longterm weather for another city: </strong></p>
-      <ul>
-        <li><a href="#/" @click="fetchItems(chosenCity = 'oslo')">Oslo</a></li>
-        <li><a href="#/" @click="fetchItems(chosenCity = 'trondheim')">Trondheim</a></li>
-        <li><a href="#/" @click="fetchItems(chosenCity = 'stavanger' )">Stavanger</a></li>
-      </ul>
       <br>
       <div id="card">
         <h4>Long-term Forecast</h4>

@@ -14,12 +14,7 @@
     </div>
 
     <div v-else>
-      <p><strong>Check todays and tomorrows weather for another city: </strong></p>
-      <ul>
-        <li><a href="#/" @click="fetchItems(chosenCity = 'oslo')">Oslo</a></li>
-        <li><a href="#/" @click="fetchItems(chosenCity = 'trondheim')">Trondheim</a></li>
-        <li><a href="#/" @click="fetchItems(chosenCity = 'stavanger' )">Stavanger</a></li>
-      </ul>
+    
       <div id="card">
         
         <h4>Today, {{Today}}</h4>
