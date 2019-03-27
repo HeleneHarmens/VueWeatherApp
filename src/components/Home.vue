@@ -129,7 +129,6 @@ h2 {
 }
 
 ul {
-  info-style-type: none;
   padding: 0;
 }
 
