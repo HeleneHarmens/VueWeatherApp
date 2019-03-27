@@ -1,17 +1,17 @@
 <template>
   <div class="myMap">
     <h1>{{ title }}</h1>
-    <div id="mapid" ref="mapElement"></div>
+    <div id="mapid"></div>
     <div id="location">
       <ul>
         <li>
-          <a href="#" onClick="mymap.setView([58.969975, 5.733107],8)">Stavanger</a>
+          <a href="#" @click="moveMap([58.969975, 5.733107])">Stavanger</a>
         </li>
         <li>
-          <a href="#" onClick="mymap.setView([59.91111, 10.75278],8)">Oslo</a>
+          <a href="#" @click="moveMap([59.91111, 10.75278])">Oslo</a>
         </li>
         <li>
-          <a href="#" onClick="mymap.setView([63.4306, 10.3952],8)">Trondheim</a>
+          <a href="#" @click="moveMap([63.4306, 10.3952])">Trondheim</a>
         </li>
       </ul>
     </div>
@@ -21,6 +21,7 @@
 
 
 <script>
+import L from "leaflet";
 export default {
   name: "myMap",
   data() {
@@ -33,6 +34,7 @@ export default {
       info: [],
       lists: [],
       cities: [],
+      leafletMap: null
     };
   },
 
@@ -40,23 +42,29 @@ export default {
     this.fetchItems();
   },
 
+  mounted() {
+    this.initMap();
+  },
+
   methods: {
     fetchItems() {
       let uri =
-        "http://api.openweathermap.org/data/2.5/forecast?q="+this.chosenCity+"&appid="+this.apiKey+"&units="+this.units;
+        "http://api.openweathermap.org/data/2.5/forecast?q=" +
+        this.chosenCity +
+        "&appid=" +
+        this.apiKey +
+        "&units=" +
+        this.units;
       this.$http.get(uri, { responseType: "json" }).then(response => {
         this.info = response.data;
-        (this.lists = response.data.list), 
-        (this.cities = response.data.city);
+        (this.lists = response.data.list), (this.cities = response.data.city);
         //console.log("home.vue info: " + JSON.stringify(this.info));
       });
     },
 
-  
-  
-  mounted () {
-    const L = require ("leaflet");
-    var mymap = L.map(this.$refs['mapElement']).setView([61, 8], 13);
+    initMap() {
+      this.leafletMap = L.map("mapid");
+      this.leafletMap.setView([61, 8], 6);
 
       L.tileLayer(
         "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}",
@@ -68,14 +76,14 @@ export default {
           accessToken:
             "pk.eyJ1IjoibGluZWFzIiwiYSI6ImNqdHBrd21icDAxaHI0NG41OGlwNm43bnoifQ.FX3CR_EALV1j7wC_1W4vkQ"
         }
-      ).addTo(mymap);
+      ).addTo(this.leafletMap);
+    },
 
+    moveMap(coord) {
+      this.leafletMap.setView(coord, 8);
+    }
   }
-
-  }
-
 };
- 
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -135,7 +143,13 @@ p {
 }
 
 #mapid {
-        height: 500px;
-        width: 500px;
-      }
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+  height: 40%;
+  width: 40%;
+  text-align: center;
+  display: inline-block;
+}
 </style>
+
