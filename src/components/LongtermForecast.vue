@@ -1,7 +1,7 @@
 <template>
   <div class="longterm">
     <h1>{{ title }}</h1>
-    <p><strong>Check todays and tomorrows weather for another city: </strong></p>
+    <p><strong>Check longterm weather for another city: </strong></p>
         <ul>
           <li><a href="#/" @click="fetchItems(chosenCity = 'Oslo')">Oslo</a></li>
           <li><a href="#/" @click="fetchItems(chosenCity = 'Trondheim')">Trondheim</a></li>
