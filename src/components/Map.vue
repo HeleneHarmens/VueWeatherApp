@@ -1,8 +1,6 @@
 <template>
   <div class="myMap">
     <h1>{{ title }}</h1>
-    <div id="mapid"></div>
-    <div id="location">
       <!--Links to alter map to go to those places-->
       <ul>
         <li>
@@ -15,6 +13,8 @@
           <a href="#/" @click="moveMap([58.969975, 5.733107])">Stavanger</a>
         </li>
       </ul>
+      <div id="mapid"></div>
+    <div id="location">
     </div>
   </div>
 </template>
@@ -94,6 +94,13 @@ export default {
 
 <!-- Some CSS to make pretty -->
 <style>
+.myMap {
+ background-color: rgb(245, 176, 208);
+ padding: 20px;
+ box-shadow: 0 1px 5px 0 rgba(102, 15, 69, 0.2), 0 2px 20px 0 rgba(117, 22, 81, 0.2);
+ 
+}
+
 h1,
 h2 {
   font-weight: normal;
@@ -108,9 +115,7 @@ li {
   margin: 0 10px;
 }
 
-a {
-  color: #35495e;
-}
+
 
 ul {
   padding: 5px;
@@ -149,6 +154,7 @@ p {
 }
 
 #mapid {
+  
   overflow: hidden;
   padding-bottom: 56.25%;
   position: relative;

@@ -1,19 +1,27 @@
 <template>
-  <div class="home">
-    <h1>{{ title }}</h1>
+  <div id="home" class="home">
     
+    <!-- if/while item's not fetched -->
     <div v-if="isLoading">
         <p>is loading...</p> 
     </div>
 
+    <!-- after item's fetched -->
     <div v-else>
+
+      <!-- Display on webpage -->
+      <h1>{{ title }}</h1>
+
       <div id="info">
-        <h2>{{cities.name}}</h2>
-        <p><strong>Day:</strong> {{lists[1].dt_txt}}</p>
-        <p><strong>Temperature:</strong> {{lists[1].main.temp}}</p>
-        <p><strong>Humidity:</strong> {{lists[1].main.humidity}}</p>
-        <p><strong>Weather:</strong> {{lists[1].weather[0].main}}</p>
+        <h2>{{cities.name}} now</h2>
+         <img v-bind:src="'http://openweathermap.org/img/w/'+ 
+                    lists[0].weather[0].icon.replace('01n', '01d')+'.png'">
+        <p><strong>Day:</strong> {{lists[0].dt_txt.substring(0,10)}}</p>
+        <p><strong>Temperature:</strong> {{lists[0].main.temp}}°</p>
+        <p><strong>Humidity:</strong> {{lists[0].main.humidity}}</p>
+        <p><strong>Weather:</strong> {{lists[0].weather[0].main}}</p>
         <br>
+        <!-- Links to cities to display -->
         <p><strong>Check todays weather for another city!</strong></p>
         <a href="#" @click="fetchItems(chosenCity = 'oslo')">Oslo</a>
         <a href="#" @click="fetchItems(chosenCity = 'trondheim')">Trondheim</a>
@@ -30,7 +38,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      title: "Home",
+      title: "Weather App",
       apiKey: "6796724a94f12b9b9b866a4d4b0794b2",
       chosenCity: "Trondheim",
       units: "metric",
@@ -40,12 +48,14 @@ export default {
     };
   },
 
+  /* Called synchronously after the instance is created */
   created: function() {
     this.isLoading = true
     this.fetchItems();
   },
 
   methods: {
+    /* Get stuff from api and save to variables declared above */
     fetchItems() {
       let uri =
         "http://api.openweathermap.org/data/2.5/forecast?q="+this.chosenCity+"&appid="+this.apiKey+"&units="+this.units;
@@ -54,18 +64,22 @@ export default {
         (this.lists = response.data.list), 
         (this.cities = response.data.city);
         this.isLoading = false;
-        //console.log("home.vue info: " + JSON.stringify(this.info));
       });
     }
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- CSS -->
 <style>
 h1,
 h2 {
   font-weight: normal;
+}
+
+#home {
+  padding: 20px;
+  
 }
 
 ul {
@@ -77,9 +91,7 @@ li {
   margin: 0 10px;
 }
 
-a {
-  color: #35495e;
-}
+
 
 ul {
   padding: 5px;
@@ -111,7 +123,13 @@ th {
 }
 
 #info {
+  width: fit-content;
   margin:0;
+  padding: 20px;
+  text-align: center;
+  display: inline-block;
+  background-color: rgb(255, 193, 222);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 p { 
