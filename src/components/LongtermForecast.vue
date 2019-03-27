@@ -2,79 +2,31 @@
   <div class="longterm">
     <h1>{{ title }}</h1>
     
-
-    <div id="card">
-      <h4>Today, {{lists[0].dt_txt}}</h4>
-      <table>
-        <tr>
-          <td><h5>Time</h5></td>
-          <td><h5>Forecast</h5></td>
-          <td><h5>Temp</h5></td>
-          <td><h5>Wind</h5></td>
-        </tr>
-        <tr>
-          <td><p>{{lists[0].dt_txt}}</p></td>
-          <td><p>{{lists[0].weather[0].main}}</p></td>
-          <td><p>{{lists[0].main.temp}}</p></td>
-          <td><p>{{lists[0].wind.speed}}</p></td>
-        </tr>
-        <tr>
-          <td><p>{{lists[1].dt_txt}}</p></td>
-          <td><p>{{lists[1].weather[0].main}}</p></td>
-          <td><p>{{lists[1].main.temp}}</p></td>
-          <td><p>{{lists[1].wind.speed}}</p></td>
-        </tr>
-        <tr>
-          <td><p>{{lists[2].dt_txt}}</p></td>
-          <td><p>{{lists[2].weather[0].main}}</p></td>
-          <td><p>{{lists[2].main.temp}}</p></td>
-          <td><p>{{lists[2].wind.speed}}</p></td>
-        </tr>
-        <tr>
-          <td><p>{{lists[3].dt_txt}}</p></td>
-          <td><p>{{lists[3].weather[0].main}}</p></td>
-          <td><p>{{lists[3].main.temp}}</p></td>
-          <td><p>{{lists[3].wind.speed}}</p></td>
-        </tr>
-      </table>
+    <div v-if="isLoading">
+        <p>is loading...</p> 
     </div>
 
-        <div id="card">
-      <h4>Tomorrow, {{lists[8].dt_txt}}</h4>
-      <table>
-        <tr>
-          <td><h5>Time</h5></td>
-          <td><h5>Forecast</h5></td>
-          <td><h5>Temp</h5></td>
-          <td><h5>Wind</h5></td>
-        </tr>
-        <tr>
-          <td> <p>{{lists[8].dt_txt}}</p></td>
-          <td><p>{{lists[8].weather[0].main}}</p></td>
-          <td><p>{{lists[8].main.temp}}</p></td>
-          <td><p>{{lists[8].wind.speed}}</p></td>
-        </tr>
-        <tr>
-          <td> <p>{{lists[9].dt_txt}}</p></td>
-          <td><p>{{lists[9].weather[0].main}}</p></td>
-          <td><p>{{lists[9].main.temp}}</p></td>
-          <td><p>{{lists[9].wind.speed}}</p></td>
-        </tr>
-        <tr>
-          <td> <p>{{lists[10].dt_txt}}</p></td>
-          <td><p>{{lists[10].weather[0].main}}</p></td>
-          <td><p>{{lists[10].main.temp}}</p></td>
-          <td><p>{{lists[10].wind.speed}}</p></td>
-        </tr>
-        <tr>
-          <td> <p>{{lists[10].dt_txt}}</p></td>
-          <td><p>{{lists[10].weather[0].main}}</p></td>
-          <td><p>{{lists[10].main.temp}}</p></td>
-          <td><p>{{lists[10].wind.speed}}</p></td>
-        </tr>
-      </table>
-    </div>
+    <div v-else>
 
+      <br>
+      <div id="card">
+        <h4>longterm for</h4>
+        <table>
+          <tr>
+            <td><h5>Time</h5></td>
+            <td><h5>Forecast</h5></td>
+            <td><h5>Temp</h5></td>
+            <td><h5>Wind</h5></td>
+          </tr>
+          <tr v-for="i in 10" :key="i">
+            <td> <p>{{lists[i].dt_txt}}</p></td>
+            <td><p>{{lists[i].weather[0].main}}</p></td>
+            <td><p>{{lists[i].main.temp}}</p></td>
+            <td><p>{{lists[i].wind.speed}}</p></td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -83,8 +35,8 @@ export default {
   name: "longterm",
   data() {
     return {
+      isLoading: false,
       title: "Long-term",
-      tickets: [],
       apiKey: "6796724a94f12b9b9b866a4d4b0794b2",
       chosenCity: "Oslo",
       units: "metric",
@@ -95,6 +47,7 @@ export default {
   },
 
   created: function() {
+    this.isLoading = true
     this.fetchItems();
   },
 
@@ -106,6 +59,7 @@ export default {
         this.info = response.data;
         (this.lists = response.data.list), 
         (this.cities = response.data.city);
+        this.isLoading = false;
         //console.log("home.vue info: " + JSON.stringify(this.info));
       });
     }

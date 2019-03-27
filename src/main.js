@@ -27,12 +27,6 @@ new Vue({
     units: 'metric',
     list: []
   },
-  mounted() {
-    axios.get(url).then(response => {
-      this.results = response.data
-      //console.log("mainjs results: "+JSON.stringify(this.results))
-    })
-  },
     
   created() {
       axios
